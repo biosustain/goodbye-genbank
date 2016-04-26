@@ -4,7 +4,8 @@ from gbgb.maps.features import GENBANK_REGULATORY_DEFAULT_SO_TERM, GENBANK_REGUL
     UNAMBIGUOUS_INVALID_KEY_SO_TERMS, GENBANK_PSEUDOGENE_TYPE_SO_TERMS, GENBANK_NC_RNA_DEFAULT_SO_TERM, \
     GENBANK_PSEUDOGENE_DEFAULT_SO_TERM, DEFAULT_SO_TERM, SO_TERM_GENBANK_FEATURE_KEYS, DEFAULT_GENBANK_FEATURE_KEY, \
     GENBANK_FEATURE_KEYS, GENBANK_FEATURE_KEY_SO_TERMS
-from gbgb.maps.qualifiers import single, DEFAULT_QUALIFIER_TRANSFORMERS, remove_qualifiers_inappropriate_for_feature
+from gbgb.maps.qualifiers import DEFAULT_QUALIFIER_TRANSFORMERS, remove_qualifiers_inappropriate_for_feature
+from gbgb.utils import single, as_list
 
 # https://github.com/The-Sequence-Ontology/SO-Ontologies/blob/master/VERSION-INFO
 # https://github.com/The-Sequence-Ontology/SO-Ontologies/blob/master/so-xp-simple.obo
@@ -123,14 +124,6 @@ def convert_feature(feature, qualifier_transformers=DEFAULT_QUALIFIER_TRANSFORME
                       ref_db=feature.ref_db)
 
 
-def _unconvert_qualifier(qualifier):
-    if qualifier is True:
-        return []
-    if isinstance(qualifier, (list, tuple, set)):
-        return list(qualifier)
-    return [qualifier]
-
-
 def unconvert_feature(feature):
     """
     Restores a feature to its sad former shape.
@@ -142,7 +135,7 @@ def unconvert_feature(feature):
                       location_operator=feature.location_operator,
                       type=genbank_feature_key(feature),
                       id=feature.id,
-                      qualifiers={name: _unconvert_qualifier(value) for name, value in feature.qualifiers.items()},
+                      qualifiers={name: as_list(value) for name, value in feature.qualifiers.items()},
                       ref=feature.ref,
                       ref_db=feature.ref_db)
 
