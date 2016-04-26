@@ -5,7 +5,7 @@ Goodbye, GenBank
 This package converts `SeqFeature <http://biopython.org/DIST/docs/api/Bio.SeqFeature.SeqFeature-class.html>`_ sequence
 annotations from NCBI GenBank records to a common and simplified format. GenBank feature annotations have a
 feature key and reasonably well defined qualifiers, but non-standard and discontinued feature types and qualifiers are commonly
-used, and often the feature key is something someone made up and not a valid GenBank feature key. And even when a valid GenBank feature key is used, it is often incomplete and useless without additional details in the qualifiers.
+used and often the feature key is something someone made up and not a valid GenBank feature key. And even when a valid GenBank feature key is used, it is often incomplete and useless without additional details in the qualifiers.
 
 This package converts most feature keys to appropriate `Sequence Ontology <http://www.sequenceontology.org/>`_ terms used by GFF3 and SBOL. Non-standard qualifiers are repaired or removed.
 
