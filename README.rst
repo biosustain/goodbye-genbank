@@ -2,19 +2,28 @@
 Goodbye, GenBank
 ================
 
-This package converts* `SeqFeature <http://biopython.org/DIST/docs/api/Bio.SeqFeature.SeqFeature-class.html>`_ sequence
+This package converts `SeqFeature <http://biopython.org/DIST/docs/api/Bio.SeqFeature.SeqFeature-class.html>`_ sequence
 annotations from NCBI GenBank records to a common and simplified format. GenBank feature annotations have a
 type and reasonably well defined qualifiers, but non-standard and discontinued feature types and qualifiers are commonly
-used, and often the feature type is
+used, and often the feature key is something someone made up and not a valid GenBank feature key. And even when a valid GenBank feature key is used, it is often incomplete and useless without additional details in the qualifiers.
 
-This package converts most of these feature types to appropriate `Sequence Ontology <http://www.sequenceontology.org/>`_ terms used by GFF3 and SBOL.
- Non-standard qualifiers are repaired or removed.
+This package converts most feature keys to appropriate `Sequence Ontology <http://www.sequenceontology.org/>`_ terms used by GFF3 and SBOL. Non-standard qualifiers are repaired or removed.
 
-*Goodbye, GenBank* is intended for those who wish to clean-up their GenBank files and then transition to a different format.
+**Goodbye, GenBank** is intended for those who wish to clean-up their GenBank files and then transition to a different format.
 The philosophy of this project is to salvage what is salvageable and to discard what is not. GenBank feature types are translated
-to Sequence Ontology terms; qualifiers are converted into a reduced set that contains only the parts that are not broken.
+to Sequence Ontology terms; qualifiers are converted into a reduced set that contains only the parts that are not broken. Qualifiers are also converted to their correct type: ``int`` for integers, ``list`` only for qualifiers that can appear multiple times, ``bool`` for flags.
 
-However, different options are available to configure what is kept and what is thrown away.
+Moreover, different options are available to configure what is kept and what is thrown away.
+
+Installation
+------------
+
+NOTE: The package is not on PyPI yet, but this is how to install it once it is:
+
+::
+
+    pip install gbgb
+    
 
 Example
 -------
