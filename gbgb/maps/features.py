@@ -24,7 +24,8 @@ GENBANK_DISCONTINUED_FEATURE_KEY_SO_TERMS = {
     'GC_signal': 'GC_rich_promoter_region',
     'polyA_signal': 'polyA_signal_sequence',
     'attenuator': 'attenuator',
-    'terminator': 'terminator'
+    'terminator': 'terminator',
+    'LTR': 'long_terminal_repeat',
 }
 
 GENBANK_FEATURE_KEY_SO_TERMS = {
@@ -32,7 +33,6 @@ GENBANK_FEATURE_KEY_SO_TERMS = {
     "5'UTR": 'five_prime_UTR',
     'CDS': 'CDS',
     'D-loop': 'D_loop',
-    'LTR': 'long_terminal_repeat',
     'STS': 'STS',
 
     # Immune system related:
@@ -195,8 +195,7 @@ GENBANK_REGULATORY_CLASS_SO_TERMS = {
     "other": GENBANK_REGULATORY_DEFAULT_SO_TERM
 }
 
-SO_TERM_GENBANK_FEATURE_KEYS.update({v: GENBANK_REGULATORY_DEFAULT_SO_TERM
-                                     for k, v in GENBANK_REGULATORY_CLASS_SO_TERMS.items()})
+SO_TERM_GENBANK_FEATURE_KEYS.update({v: 'regulatory' for k, v in GENBANK_REGULATORY_CLASS_SO_TERMS.items()})
 
 GENBANK_NC_RNA_DEFAULT_SO_TERM = "ncRNA_gene"
 
@@ -223,8 +222,54 @@ GENBANK_NC_RNA_CLASS_SO_TERMS = {
     "other": GENBANK_NC_RNA_DEFAULT_SO_TERM
 }
 
-SO_TERM_GENBANK_FEATURE_KEYS.update({v: GENBANK_NC_RNA_DEFAULT_SO_TERM
-                                     for k, v in GENBANK_NC_RNA_CLASS_SO_TERMS.items()})
+SO_TERM_GENBANK_FEATURE_KEYS.update({v: 'ncRNA' for k, v in GENBANK_NC_RNA_CLASS_SO_TERMS.items()})
+
+GENBANK_MOBILE_ELEMENT_DEFAULT_SO_TERM = 'mobile_genetic_element'
+
+GENBANK_MOBILE_ELEMENT_TYPE_SO_TERMS = {
+    "transposon": "transposable_element",
+    "retrotransposon": "retrotransposon",
+    "integron": "integron",
+    "insertion sequence": "insertion_sequence",
+    "non-LTR retrotransposon": "non_LTR_retrotransposon",
+    "MITE": "MITE",
+    "SINE": "SINE_element",
+    "LINE": "LINE_element",
+    "other": GENBANK_MOBILE_ELEMENT_DEFAULT_SO_TERM
+}
+
+SO_TERM_GENBANK_FEATURE_KEYS.update({v: 'mobile_element' for k, v in GENBANK_MOBILE_ELEMENT_TYPE_SO_TERMS.items()})
+
+GENBANK_REPEAT_REGION_DEFAULT_SO_TERM = 'repeat_region'
+
+GENBANK_REPEAT_TYPE_SO_TERMS = {
+    'tandem': 'tandem_repeat',
+    'direct': 'direct_repeat',
+    'inverted': 'inverted_repeat',
+    'nested': 'nested_repeat',
+    'dispersed': 'dispersed_repeat',
+    'long_terminal_repeat': 'long_terminal_repeat',
+    'non_ltr_retrotransposon_polymeric_tract': 'non_LTR_retrotransposon_polymeric_tract',
+    'centromeric_repeat': 'centromeric_repeat',
+    'telomeric_repeat': 'telomeric_repeat',
+    'x_element_combinatorial_repeat': 'X_element_combinatorial_repeat',
+    'y_prime_element': 'Y_prime_element',
+
+    # TODO terminal and flanking repeat types have no matching SO terms
+    #'terminal': None,
+    #  terminal: a repeat at the ends of and within the sequence for which it has functional significance other
+    #   than long terminal repeat;
+    #'flanking': None,
+    #  flanking: a repeat lying outside the sequence for which it has functional significance
+    #   (eg. transposon insertion target sites);
+
+    # For the most current list of allowed values and their definitions please visit:
+    #   http://www.insdc.org/controlled-vocabulary-rpttype-qualifier
+
+    'other': GENBANK_REPEAT_REGION_DEFAULT_SO_TERM,
+}
+
+SO_TERM_GENBANK_FEATURE_KEYS.update({v: 'repeat_region' for k, v in GENBANK_REPEAT_TYPE_SO_TERMS.items()})
 
 GENBANK_PSEUDOGENE_DEFAULT_SO_TERM = "pseudogene"
 
@@ -236,14 +281,6 @@ GENBANK_PSEUDOGENE_TYPE_SO_TERMS = {
     "unknown": GENBANK_PSEUDOGENE_DEFAULT_SO_TERM,
 }
 
-SO_TERM_GENBANK_FEATURE_KEYS.update({v: GENBANK_PSEUDOGENE_DEFAULT_SO_TERM
-                                     for k, v in GENBANK_PSEUDOGENE_TYPE_SO_TERMS.items()})
-
-REDUCED_SO_TERMS = {}
-
-REDUCED_SO_TERMS.update({
-                            term: GENBANK_REGULATORY_DEFAULT_SO_TERM
-                            for term in GENBANK_REGULATORY_CLASS_SO_TERMS.values()
-                            })
+SO_TERM_GENBANK_FEATURE_KEYS.update({v: 'pseudogene' for k, v in GENBANK_PSEUDOGENE_TYPE_SO_TERMS.items()})
 
 DEFAULT_GENBANK_FEATURE_KEY = 'misc_feature'

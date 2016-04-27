@@ -3,7 +3,8 @@ from Bio.SeqFeature import SeqFeature
 from gbgb.maps.features import GENBANK_REGULATORY_DEFAULT_SO_TERM, GENBANK_REGULATORY_CLASS_SO_TERMS, \
     UNAMBIGUOUS_INVALID_KEY_SO_TERMS, GENBANK_PSEUDOGENE_TYPE_SO_TERMS, GENBANK_NC_RNA_DEFAULT_SO_TERM, \
     GENBANK_PSEUDOGENE_DEFAULT_SO_TERM, DEFAULT_SO_TERM, SO_TERM_GENBANK_FEATURE_KEYS, DEFAULT_GENBANK_FEATURE_KEY, \
-    GENBANK_FEATURE_KEYS, GENBANK_FEATURE_KEY_SO_TERMS
+    GENBANK_FEATURE_KEYS, GENBANK_FEATURE_KEY_SO_TERMS, GENBANK_MOBILE_ELEMENT_TYPE_SO_TERMS, \
+    GENBANK_MOBILE_ELEMENT_DEFAULT_SO_TERM, GENBANK_REPEAT_TYPE_SO_TERMS, GENBANK_REPEAT_REGION_DEFAULT_SO_TERM
 from gbgb.maps.qualifiers import DEFAULT_QUALIFIER_TRANSFORMERS, remove_qualifiers_inappropriate_for_feature
 from gbgb.utils import single, as_list
 
@@ -37,11 +38,30 @@ def convert_feature_type(feature):
         return GENBANK_REGULATORY_CLASS_SO_TERMS.get(regulatory_class, GENBANK_REGULATORY_DEFAULT_SO_TERM)
 
     elif type_ == 'ncRNA':
-        nc_rna_class = single(feature.qualifiers, 'ncRNA_class')
+        nc_rna_class = single(feature.qualifiers, 'ncRNA_class', on_multiple_ignore=True)
 
         if nc_rna_class is None:
             return GENBANK_NC_RNA_DEFAULT_SO_TERM
         return GENBANK_REGULATORY_CLASS_SO_TERMS.get(nc_rna_class, GENBANK_NC_RNA_DEFAULT_SO_TERM)
+
+    elif type_ == 'mobile_element':
+        mobile_element_type = single(feature.qualifiers, 'mobile_element_type', on_multiple_ignore=True).split(':')[0]
+
+        if mobile_element_type is None:
+            return GENBANK_MOBILE_ELEMENT_DEFAULT_SO_TERM
+
+        # TODO mobile elements can also have a /rpt_type="" qualifier
+        return GENBANK_MOBILE_ELEMENT_TYPE_SO_TERMS.get(mobile_element_type, GENBANK_MOBILE_ELEMENT_DEFAULT_SO_TERM)
+
+    elif type_ == 'repeat_region':
+        # TODO other features that can also have a /rpt_type="" qualifier: 'mobile_element', 'oriT', 'telomere'
+        repeat_type = single(feature.qualifiers, 'rpt_type', on_multiple_ignore=True)
+
+        if repeat_type is None:
+            return GENBANK_REPEAT_REGION_DEFAULT_SO_TERM
+
+        repeat_type = repeat_type.lower()  # /rpt_type="" is case-insensitive
+        return GENBANK_REPEAT_TYPE_SO_TERMS.get(repeat_type, GENBANK_REPEAT_REGION_DEFAULT_SO_TERM)
 
     else:
         if 'pseudo' in feature.qualifiers:

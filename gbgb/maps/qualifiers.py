@@ -305,10 +305,10 @@ GENBANK_QUALIFIER_FEATURE_KEYS = {
     # NOTE: qualifiers /rpt_unit_range and /rpt_unit_seq replaced qualifier /rpt_unit in December 2005
 
     # TODO repeat_region!
-    'rpt_family': ['repeat_region'],
-    'rpt_type': ['repeat_region'],
-    'rpt_unit_range': ['oriT', 'repeat_region'],
-    'rpt_unit_seq': ['oriT', 'repeat_region'],
+    'rpt_family': ['mobile_element', 'oriT', 'repeat_region'],
+    'rpt_type': ['mobile_element', 'oriT', 'repeat_region', 'telomere'],
+    'rpt_unit_range': ['oriT', 'repeat_region', 'telomere'],
+    'rpt_unit_seq': ['oriT', 'repeat_region', 'telomere'],
 
     'satellite': ['repeat_region'],
     'segment': ['source'],
