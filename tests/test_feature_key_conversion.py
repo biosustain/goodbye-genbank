@@ -18,7 +18,7 @@ class FeatureKeyConversionTestCase(unittest.TestCase):
 
         self.assertEqual('primer_bind', genbank_feature_key('primer_binding_site'))
 
-        self.assertEqual('regulatory_region', genbank_feature_key('GC_rich_promoter_region'))
+        self.assertEqual('regulatory', genbank_feature_key('GC_rich_promoter_region'))
 
         self.assertEqual('ncRNA_gene', genbank_feature_key('miRNA_gene'))
         self.assertEqual('ncRNA_gene', genbank_feature_key('antisense_RNA'))
