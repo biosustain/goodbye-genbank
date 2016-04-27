@@ -1,0 +1,24 @@
+LOCUS       Sample                   120 bp ds-DNA     circular     27-APR-2016
+DEFINITION  .
+FEATURES             Location/Qualifiers
+     CDS             complement(25..43)
+                     /label="CDS"
+                     /locus_tag="b0001"
+                     /ApEinfo_revcolor=#9eafd2
+                     /ApEinfo_fwdcolor=#9eafd2
+     unsure          103..106
+                     /label="What is this?"
+                     /ApEinfo_revcolor=#b1ff67
+                     /ApEinfo_fwdcolor=#b1ff67
+     gene            complement(20..90)
+                     /label="genA"
+                     /gene="genA"
+                     /gene_synonym="A"
+                     /gene_synonym="alpha"
+                     /locus_tag="b0001"
+                     /ApEinfo_revcolor=#c7b0e3
+                     /ApEinfo_fwdcolor=#c7b0e3
+ORIGIN
+        1 ACTGTTGGGC GCCATCTCCT TGCATGATTG GAGCCAATCA ATTCTTGCGG AGAACTGTGA
+       61 ATGCGCAAAC CAACCCTTGG CAGAACCACC ATTCCTTGCG GCGGCGGTGC TCAACGGCCT
+//
