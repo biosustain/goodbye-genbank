@@ -1,3 +1,4 @@
+import os
 import unittest
 
 
@@ -7,6 +8,7 @@ from six import StringIO
 
 from gbgb import convert_feature, unconvert_feature
 
+FILES_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'files/')
 
 class FeatureConversionTestCase(unittest.TestCase):
 
@@ -31,7 +33,7 @@ class FeatureConversionTestCase(unittest.TestCase):
         self.assertEqual(f1.qualifiers, f2.qualifiers)
 
     def test_genbank_record_conversion(self):
-        with open('files/sample.gb') as f:
+        with open(os.path.join(FILES_PATH, 'sample.gb')) as f:
             first_record = next(SeqIO.parse(f, 'genbank'))
 
         self.assertEqual(4, len(first_record.features))
@@ -67,13 +69,13 @@ class FeatureConversionTestCase(unittest.TestCase):
             self.assertFeatureEqual(f1, convert_feature(f2))
 
     def test_genbank_record_fixing(self):
-        with open('files/sample.gb') as f:
+        with open(os.path.join(FILES_PATH, 'sample.gb')) as f:
             first_record = next(SeqIO.parse(f, 'genbank'))
 
         first_record.features = [unconvert_feature(convert_feature(f)) for f in first_record.features]
 
         output = StringIO()
         SeqIO.write(first_record, output, "genbank")
-        with open('files/sample.fixed.gb') as f:
+        with open(os.path.join(FILES_PATH, 'sample.fixed.gb')) as f:
             self.assertEqual(output.getvalue(), f.read())
         output.close()

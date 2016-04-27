@@ -18,6 +18,10 @@ setup(
         'biopython>=1.66',
         'six>=1.8.0'
     ],
+    test_suite='nose.collector',
+    tests_require=[
+        'nose>=1.1.2',
+    ],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
