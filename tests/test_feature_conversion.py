@@ -1,9 +1,11 @@
 import unittest
 
+
 from Bio import SeqIO
 from Bio.SeqFeature import FeatureLocation, SeqFeature, CompoundLocation
+from six import StringIO
 
-from gbgb import convert_feature
+from gbgb import convert_feature, unconvert_feature
 
 
 class FeatureConversionTestCase(unittest.TestCase):
@@ -24,6 +26,7 @@ class FeatureConversionTestCase(unittest.TestCase):
 
     def assertFeatureEqual(self, f1, f2):
         self.assertEqual(f1.__class__, f2.__class__)
+        self.assertEqual(f1.type, f2.type)
         self.assertFeatureLocationEqual(f1.location, f2.location)
         self.assertEqual(f1.qualifiers, f2.qualifiers)
 
@@ -31,7 +34,7 @@ class FeatureConversionTestCase(unittest.TestCase):
         with open('files/sample.gb') as f:
             first_record = next(SeqIO.parse(f, 'genbank'))
 
-        self.assertEqual(3, len(first_record.features))
+        self.assertEqual(4, len(first_record.features))
 
         EXPECTED_FEATURES = (
             SeqFeature(type='CDS',
@@ -52,8 +55,25 @@ class FeatureConversionTestCase(unittest.TestCase):
                            'gene': 'genA',
                            'gene_synonym': ['A', 'alpha'],
                            'locus_tag': 'b0001'
+                       }),
+            SeqFeature(type='sequence_feature',
+                       location=FeatureLocation(106, 110, strand=1),
+                       qualifiers={
+                           'note': 'This is something.'
                        })
         )
 
         for f1, f2 in zip(EXPECTED_FEATURES, first_record.features):
             self.assertFeatureEqual(f1, convert_feature(f2))
+
+    def test_genbank_record_fixing(self):
+        with open('files/sample.gb') as f:
+            first_record = next(SeqIO.parse(f, 'genbank'))
+
+        first_record.features = [unconvert_feature(convert_feature(f)) for f in first_record.features]
+
+        output = StringIO()
+        SeqIO.write(first_record, output, "genbank")
+        with open('files/sample.fixed.gb') as f:
+            self.assertEqual(output.getvalue(), f.read())
+        output.close()

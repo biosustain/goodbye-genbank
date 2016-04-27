@@ -116,12 +116,9 @@ def convert_feature(feature, qualifier_transformers=DEFAULT_QUALIFIER_TRANSFORME
     qualifiers = remove_qualifiers_inappropriate_for_feature(before, dict(after), genbank_feature_key(type_))
 
     return SeqFeature(location=feature.location,
-                      location_operator=feature.location_operator,
                       type=type_,
                       id=feature.id,
-                      qualifiers=qualifiers,
-                      ref=feature.ref,
-                      ref_db=feature.ref_db)
+                      qualifiers=qualifiers)
 
 
 def unconvert_feature(feature):
@@ -132,12 +129,9 @@ def unconvert_feature(feature):
     :return: a :class:`SeqFeature` with each qualifier being a list and having a GenBank feature key
     """
     return SeqFeature(location=feature.location,
-                      location_operator=feature.location_operator,
-                      type=genbank_feature_key(feature),
+                      type=genbank_feature_key(feature.type),
                       id=feature.id,
-                      qualifiers={name: as_list(value) for name, value in feature.qualifiers.items()},
-                      ref=feature.ref,
-                      ref_db=feature.ref_db)
+                      qualifiers={name: as_list(value) for name, value in feature.qualifiers.items()})
 
 
 def genbank_feature_key(sequence_feature_term, idempotent=True):

@@ -18,6 +18,8 @@ FEATURES             Location/Qualifiers
                      /locus_tag="b0001"
                      /ApEinfo_revcolor=#c7b0e3
                      /ApEinfo_fwdcolor=#c7b0e3
+     thingamajig     107..110
+                     /label="This is something."
 ORIGIN
         1 ACTGTTGGGC GCCATCTCCT TGCATGATTG GAGCCAATCA ATTCTTGCGG AGAACTGTGA
        61 ATGCGCAAAC CAACCCTTGG CAGAACCACC ATTCCTTGCG GCGGCGGTGC TCAACGGCCT

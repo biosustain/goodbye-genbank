@@ -1,0 +1,26 @@
+LOCUS       Sample                   120 bp    DNA              UNK 27-APR-2016
+DEFINITION  .
+ACCESSION   Sample
+VERSION     Sample
+KEYWORDS    .
+SOURCE      .
+  ORGANISM  .
+            .
+FEATURES             Location/Qualifiers
+     CDS             complement(25..43)
+                     /locus_tag="b0001"
+                     /note="CDS"
+     unsure          103..106
+                     /note="What is this?"
+     gene            complement(20..90)
+                     /gene="genA"
+                     /gene_synonym="A"
+                     /gene_synonym="alpha"
+                     /locus_tag="b0001"
+                     /note="genA"
+     misc_feature    107..110
+                     /note="This is something."
+ORIGIN
+        1 actgttgggc gccatctcct tgcatgattg gagccaatca attcttgcgg agaactgtga
+       61 atgcgcaaac caacccttgg cagaaccacc attccttgcg gcggcggtgc tcaacggcct
+//

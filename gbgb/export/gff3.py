@@ -1,3 +1,4 @@
+from gbgb import single
 
 
 class GFF3Writer(object):
@@ -5,9 +6,8 @@ class GFF3Writer(object):
     def __init__(self):
         pass
 
-    def write(self, record, fp):
+    def write(self, record, fp, include_sequence=False):
         pass
-
 
     def write_feature(self, feature, fp, sequence=None):
         pass
@@ -42,7 +42,7 @@ class GFF3Writer(object):
                 # ...
             }[feature.type]
         except KeyError:
-            return type_, None
+            return feature.type, None
 
     def _feature_parent(self, feature, record):
         """
@@ -68,13 +68,23 @@ class GFF3Writer(object):
         pass
 
     def _feature_display_name(self, feature):
-        pass
+
+        if 'standard_name' in feature.qualifiers:
+            return single(feature.qualifiers, 'standard_name')
+
+        # TODO should include pseudogene etc.
+        if feature.type == 'gene' and 'gene' in feature.qualifiers:
+            return single(feature.qualifiers, 'gene')
+
+        # TODO if number could name exons/CDDs as gene.number.
+
+        return None
 
     def _feature_note(self, feature):
         return feature.qualifiers.get('note', None)
 
     def _CDS_feature_phase(self, feature):
-        return feature.qualifiers.get('codon_start', 0)
+        return feature.qualifiers.get('codon_start', 1) - 1
 
     # TODO source feature Is_circular. If no source feature exists, generate a "region" feature with the same ID as
     #  sequence ID and Is_circular=true
