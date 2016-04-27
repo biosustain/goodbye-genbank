@@ -257,14 +257,6 @@ GENBANK_QUALIFIER_FEATURE_KEYS = {
     'map': GENBANK_FEATURE_KEYS,
     'mating_type': ['source'],
     'mobile_element_type': ['mobile_element'],
-    # TODO mobile element feature key
-    #     Value format    "<mobile_element_type>[:<mobile_element_name>]" where
-    #                 mobile_element_type is one of the following:
-    #                 "transposon", "retrotransposon", "integron",
-    #                 "insertion sequence", "non-LTR retrotransposon",
-    #                 "SINE", "MITE", "LINE", "other".
-    # Example         /mobile_element_type="transposon:Tnp9"
-    #                     /mobile_element_type="insertion sequence:IS5I"
     'mod_base': ['modified_base'],
     'mol_type': ['source'],
     'ncRNA_class': ['ncRNA'],
@@ -301,10 +293,6 @@ GENBANK_QUALIFIER_FEATURE_KEYS = {
     'regulatory_class': ['regulatory'],
     'replace': ['misc_difference', 'old_sequence', 'unsure', 'variation'],
     'ribosomal_slippage': ['CDS', 'mRNA'],
-
-    # NOTE: qualifiers /rpt_unit_range and /rpt_unit_seq replaced qualifier /rpt_unit in December 2005
-
-    # TODO repeat_region!
     'rpt_family': ['mobile_element', 'oriT', 'repeat_region'],
     'rpt_type': ['mobile_element', 'oriT', 'repeat_region', 'telomere'],
     'rpt_unit_range': ['oriT', 'repeat_region', 'telomere'],
