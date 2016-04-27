@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Goodbye-Genbank by biosustain</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Goodbye-Genbank</h1>
+        <h2>A Python package for Biopython that gives feature annotations from GenBank records a new and better life</h2>
+        <a href="https://github.com/biosustain/goodbye-genbank" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h2>
+<a id="about-goodbye-genbank" class="anchor" href="#about-goodbye-genbank" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>About Goodbye, GenBank</h2>
+
+<p><strong>Goodbye, GenBank</strong> converts <a href="http://biopython.org/DIST/docs/api/Bio.SeqFeature.SeqFeature-class.html">SeqFeature</a> sequence annotations from NCBI GenBank records to a common and simplified format. GenBank feature annotations have a feature key and reasonably well defined qualifiers, but non-standard and discontinued feature types and qualifiers are commonly used and often the feature key is something someone made up and not a valid GenBank feature key. And even when a valid GenBank feature key is used, it is often incomplete and useless without additional details in the qualifiers.</p>
+
+<p>This package converts most feature keys to appropriate Sequence Ontology terms used by GFF3 and SBOL. Non-standard qualifiers are repaired or removed.</p>
+
+<p><strong>Goodbye, GenBank</strong> is intended for those who wish to clean-up their GenBank files and then transition to a different format. The philosophy of this project is to salvage what is salvageable and to discard what is not. GenBank feature types are translated to Sequence Ontology terms; qualifiers are converted into a reduced set that contains only the parts that are not broken. Qualifiers are also converted to their correct type: int for integers, list only for qualifiers that can appear multiple times, bool for flags.</p>
+
+<p>Moreover, different options are available to configure what is kept and what is thrown away.</p>
+
+<h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h3>
+
+<div class="highlight highlight-source-shell"><pre>pip install gbgb</pre></div>
+
+<h3>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h3>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">&gt;&gt;</span><span class="pl-k">&gt;</span> feature
+SeqFeature(FeatureLocation(ExactPosition(<span class="pl-c1">2931</span>), ExactPosition(<span class="pl-c1">2936</span>), <span class="pl-v">strand</span><span class="pl-k">=</span><span class="pl-c1">1</span>), <span class="pl-v">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>-10_signal<span class="pl-pds">'</span></span>)
+<span class="pl-k">&gt;&gt;</span><span class="pl-k">&gt;</span> feature.qualifiers
+{<span class="pl-s"><span class="pl-pds">'</span>ApEinfo_fwdcolor<span class="pl-pds">'</span></span>: [<span class="pl-s"><span class="pl-pds">'</span>pink<span class="pl-pds">'</span></span>],
+ <span class="pl-s"><span class="pl-pds">'</span>ApEinfo_graphicformat<span class="pl-pds">'</span></span>: [<span class="pl-s"><span class="pl-pds">'</span>arrow_data <span class="pl-c1">{{</span>0 1 2 0 0 -1} <span class="pl-c1">{}</span> 0} width 5 offset 0<span class="pl-pds">'</span></span>],
+ <span class="pl-s"><span class="pl-pds">'</span>ApEinfo_revcolor<span class="pl-pds">'</span></span>: [<span class="pl-s"><span class="pl-pds">'</span>pink<span class="pl-pds">'</span></span>],
+ <span class="pl-s"><span class="pl-pds">'</span>label<span class="pl-pds">'</span></span>: [<span class="pl-s"><span class="pl-pds">'</span>RNAII Promoter (-10 signal)<span class="pl-pds">'</span></span>]}
+<span class="pl-k">&gt;&gt;</span><span class="pl-k">&gt;</span>
+<span class="pl-k">&gt;&gt;</span><span class="pl-k">&gt;</span> <span class="pl-k">from</span> gbgb <span class="pl-k">import</span> convert_feature
+<span class="pl-k">&gt;&gt;</span><span class="pl-k">&gt;</span> feature <span class="pl-k">=</span> convert_feature(feature)
+<span class="pl-k">&gt;&gt;</span><span class="pl-k">&gt;</span> feature
+SeqFeature(FeatureLocation(ExactPosition(<span class="pl-c1">2931</span>), ExactPosition(<span class="pl-c1">2936</span>), <span class="pl-v">strand</span><span class="pl-k">=</span><span class="pl-c1">1</span>), <span class="pl-v">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>minus_10_signal<span class="pl-pds">'</span></span>)
+<span class="pl-k">&gt;&gt;</span><span class="pl-k">&gt;</span> feature.qualifiers
+{<span class="pl-s"><span class="pl-pds">'</span>note<span class="pl-pds">'</span></span>: <span class="pl-s"><span class="pl-pds">'</span>RNAII Promoter (-10 signal)<span class="pl-pds">'</span></span>}
+<span class="pl-k">&gt;&gt;</span><span class="pl-k">&gt;</span>
+<span class="pl-k">&gt;&gt;</span><span class="pl-k">&gt;</span> <span class="pl-k">from</span> gbgb <span class="pl-k">import</span> genbank_feature_key
+<span class="pl-k">&gt;&gt;</span><span class="pl-k">&gt;</span> genbank_feature_key(<span class="pl-s"><span class="pl-pds">'</span>minus_10_signal<span class="pl-pds">'</span></span>)
+<span class="pl-s"><span class="pl-pds">'</span>regulatory<span class="pl-pds">'</span></span></pre></div>
+
+<hr>
+
+<h3>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h3>
+
+<h4>
+<a id="gbgb" class="anchor" href="#gbgb" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong><code>gbgb</code></strong>
+</h4>
+
+<ul>
+<li>
+<p><strong><code>convert_feature_type(feature: Bio.SeqFeature) -&gt; str</code></strong></p>
+
+<p>Finds a Sequence Ontology term for a GenBank feature.</p>
+
+<p>This function requires a :class:<code>SeqFeature</code> as opposed to just a GenBank feature key, since the type of a GenBank
+feature is not always fully described by its feature key. For example a <code>regulatory</code> GenBank feature could have
+a <code>/regulatory_class="promoter"</code> qualifier.</p>
+
+<p><strong>Returns</strong> a Sequence Ontology term for the type of this feature</p>
+</li>
+<li>
+<p><strong><code>convert_feature(feature: Bio.SeqFeature, qualifiers=gbgb.maps.qualifiers.DEFAULT_QUALIFIER_TRANSFORMERS) -&gt; Bio.SeqFeature</code></strong></p>
+
+<p><strong>Returns</strong> a <code>Bio.SeqFeature</code> with valid GenBank qualifiers and a feature type that is a Sequence Ontology term.</p>
+</li>
+<li>
+<p><strong><code>unconvert_feature(feature: Bio.SeqFeature) -&gt; Bio.SeqFeature</code></strong></p>
+
+<p>Restores a feature to its sad former shape.</p>
+
+<p>To "clean up" a GenBank feature while maintaining it's format, use <code>unconvert_feature(convert_feature(feature))</code>.</p>
+
+<p><strong>Returns</strong> a <code>SeqFeature</code> with each qualifier being a list and having a GenBank feature key</p>
+</li>
+<li>
+<p><strong><code>genbank_feature_key(sequence_feature_term: str, idempotent=True) -&gt; str</code></strong></p>
+
+<p><strong>Returns</strong> a GenBank feature key for the provided Sequence Ontology term</p>
+</li>
+</ul>
+
+<h4>
+<a id="gbgbmapsqualifiers" class="anchor" href="#gbgbmapsqualifiers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong><code>gbgb.maps.qualifiers</code></strong>
+</h4>
+
+<p>The following are transformation functions. They take two identical qualifiers objects, <code>before</code> and <code>after</code> and update <code>after</code> to reflect the updated qualifiers. All of these functions return <code>after</code>.</p>
+
+<ul>
+<li>
+<p><strong><code>remove_protein_id_and_add_to_xrefs(before: dict, after: dict) -&gt; dict</code></strong></p>
+
+<p>Protein IDs are codes such as "AAF19666.1", which come from "International collaborators" and should all be
+on GenBank. This translation function removes the <code>/protein_id=""</code> qualifier and instead adds a <code>/db_xref=""</code>
+qualifier.</p>
+
+<p>Removes any malformed protein IDs as they are useless.</p>
+</li>
+<li>
+<p><strong><code>rename_label_to_note(before: dict, after: dict) -&gt; dict</code></strong></p>
+
+<p>The <code>/label=""</code> qualifier was discontinued in 2010, but is still used frequently.</p>
+
+<p>See <a href="http://www.ncbi.nlm.nih.gov/genbank/release/180/">GenBank Release 180</a>.</p>
+</li>
+<li><p><strong><code>GENBANK_SINGLE_QUALIFIERS: [str]</code></strong></p></li>
+<li><p><strong><code>format_single_qualifiers(before: dict, after: dict) -&gt; dict</code></strong></p></li>
+<li><p><strong><code>GENBANK_INTEGER_QUALIFIERS: [str]</code></strong></p></li>
+<li><p><strong><code>format_integer_qualifiers(before: dict, after: dict) -&gt; dict</code></strong></p></li>
+<li><p><strong><code>GENBANK_FLAG_QUALIFIERS: [str]</code></strong></p></li>
+<li><p><strong><code>format_flag_qualifiers(before: dict, after: dict) -&gt; dict</code></strong></p></li>
+<li><p><strong><code>APE_QUALIFIER_NAMESPACE = 'ApEinfo_'</code></strong></p></li>
+<li><p><strong><code>remove_ape_a_plasmid_editor_qualifiers(before: dict, after: dict) -&gt; dict</code></strong></p></li>
+<li><p><strong><code>GENE_RELATED_FEATURES: [str]</code></strong></p></li>
+<li><p><strong><code>GENBANK_QUALIFIER_FEATURE_KEYS: {str: [str]}</code></strong></p></li>
+<li><p><strong><code>GENBANK_QUALIFIERS: [str]</code></strong></p></li>
+<li><p><strong><code>remove_unrecognized_qualifiers(before: dict, after: dict) -&gt; dict</code></strong></p></li>
+</ul>
+
+<p>The transformation function has one additional argument:</p>
+
+<ul>
+<li>
+<p><strong><code>remove_qualifiers_inappropriate_for_feature(before: dict, after: dict, genbank_feature_key: str) -&gt; dict</code></strong></p>
+
+<p>Removes all qualifiers that are not valid for a certain genbank feature key.</p>
+</li>
+<li>
+<p><strong><code>DEFAULT_QUALIFIER_TRANSFORMERS: [callable]</code></strong></p>
+
+<pre><code>DEFAULT_QUALIFIER_TRANSFORMERS = (
+    format_single_qualifiers,
+    format_integer_qualifiers,
+    format_flag_qualifiers,
+    remove_protein_id_and_add_to_xrefs,
+    rename_label_to_note,
+    remove_unrecognized_qualifiers,
+)
+</code></pre>
+</li>
+</ul>
+
+<h4>
+<a id="gbgbmapsfeatures" class="anchor" href="#gbgbmapsfeatures" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong><code>gbgb.maps.features</code></strong>
+</h4>
+
+<ul>
+<li><p><strong><code>GENBANK_DISCONTINUED_FEATURE_KEY_SO_TERMS: {str: str}</code></strong></p></li>
+<li><p><strong><code>GENBANK_FEATURE_KEY_SO_TERMS: {str: str}</code></strong></p></li>
+<li><p><strong><code>SO_TERM_GENBANK_FEATURE_KEYS: {str: str}</code></strong></p></li>
+<li><p><strong><code>GENBANK_FEATURE_KEYS: [str]</code></strong></p></li>
+<li><p><strong><code>UNAMBIGUOUS_INVALID_KEY_SO_TERMS: {str: str}</code></strong></p></li>
+<li><p><strong><code>GENBANK_REGULATORY_DEFAULT_SO_TERM = 'regulatory_region'</code></strong></p></li>
+<li><p><strong><code>GENBANK_REGULATORY_CLASS_SO_TERMS: {str: str}</code></strong></p></li>
+<li><p><strong><code>GENBANK_NC_RNA_DEFAULT_SO_TERM = 'ncRNA_gene'</code></strong></p></li>
+<li><p><strong><code>GENBANK_NC_RNA_CLASS_SO_TERMS: {str: str}</code></strong></p></li>
+<li><p><strong><code>GENBANK_MOBILE_ELEMENT_DEFAULT_SO_TERM: 'mobile_genetic_element'</code></strong></p></li>
+<li><p><strong><code>GENBANK_MOBILE_ELEMENT_TYPE_SO_TERMS: {str: str}</code></strong></p></li>
+<li><p><strong><code>GENBANK_REPEAT_REGION_DEFAULT_SO_TERM = 'repeat_region'</code></strong></p></li>
+<li><p><strong><code>GENBANK_REPEAT_TYPE_SO_TERMS: {str: str}</code></strong></p></li>
+<li><p><strong><code>GENBANK_PSEUDOGENE_DEFAULT_SO_TERM = 'pseudogene'</code></strong></p></li>
+<li><p><strong><code>GENBANK_PSEUDOGENE_TYPE_SO_TERMS: {str: str}</code></strong></p></li>
+<li><p><strong><code>DEFAULT_GENBANK_FEATURE_KEY = 'misc_feature'</code></strong></p></li>
+</ul>
+
+<h4>
+<a id="gbgbutils" class="anchor" href="#gbgbutils" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong><code>gbgb.utils</code></strong>
+</h4>
+
+<ul>
+<li>
+<p><strong><code>single(qualifiers: dict, name: str, on_multiple_ignore=False: bool)</code></strong></p>
+
+<p>Converts <code>qualifiers[name]</code> from a list-like object to a single item. If <code>on_multiple_ignore</code> is <code>True</code>, skips qualifiers that are defined multiple times; otherwise, returns the first qualifier. If <code>qualifiers[name]</code> is not list-like, returns it.</p>
+
+<p><strong>Returns</strong> a single value for the qualifier; <code>None</code> if the qualifier has no value.</p>
+</li>
+<li><p><strong><code>as_set(qualifiers) -&gt; set</code></strong></p></li>
+<li><strong><code>as_list(qualifiers) -&gt; list</code></strong></li>
+</ul>
+
+<h3>
+<a id="design-considerations" class="anchor" href="#design-considerations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design considerations</h3>
+
+<p>For the most part, <em>Goodbye, GenBank</em> attempts to be idempotent, i.e. features and their types/keys and qualifiers can be safely transformed any number times with the same settings. The apparent mismatch between the conversion to Sequence Ontology feature terms and valid/fixed GenBank qualifiers is to simplify downstream processing. It is up to the users which qualifiers they wish to keep, but at least the choices they are given are reasonable.</p>
+
+<h3>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+
+<p>Goodbye, Genbank is written and maintained by Lars Schöning (<a href="https://github.com/lyschoening" class="user-mention">@lyschoening</a>).</p>
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>If you have any questions or suggestions or if you have found a unique new specimen of GenBank files that you would like to convert, please open an issue.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/biosustain/goodbye-genbank/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/biosustain/goodbye-genbank/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/biosustain/goodbye-genbank"></a> is maintained by <a href="https://github.com/biosustain">biosustain</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
