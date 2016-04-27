@@ -2,6 +2,9 @@
 Goodbye, GenBank
 ================
 
+.. image:: https://img.shields.io/travis/biosustain/goodbye-genbank/master.svg?style=flat-square
+    :target: https://travis-ci.org/biosustain/goodbye-genbank
+
 **Goodbye, GenBank** converts `SeqFeature <http://biopython.org/DIST/docs/api/Bio.SeqFeature.SeqFeature-class.html>`_ sequence
 annotations from NCBI GenBank records to a common and simplified format. GenBank feature annotations have a
 feature key and reasonably well defined qualifiers, but non-standard and discontinued feature types and qualifiers are commonly
