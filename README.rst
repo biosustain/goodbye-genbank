@@ -21,7 +21,7 @@ Moreover, different options are available to configure what is kept and what is 
 Installation
 ------------
 
-NOTE: The package is not on PyPI yet, but this is how to install it once it is:
+You can install *Goodbye, GenBank* with pip:
 
 ::
 
