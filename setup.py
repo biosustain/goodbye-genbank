@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='gbgb',
-    version='0.0.0',
+    version='0.1.0',
     packages=find_packages(exclude=['*tests*', 'gbgb.export*']),
     url='https://github.com/biosustain/goodbye-genbank',
     license='Apache',

@@ -9,7 +9,7 @@ RE_PROTEIN_ID = re.compile(r'^[A-Z]{3}[0-9]{5}\.[0-9]+$')
 def remove_protein_id_and_add_to_xrefs(before, after):
     """
     Protein IDs are codes such as "AAF19666.1", which come from "International collaborators" and should all be
-    on GenBank. This translation function removes the `/protein_id=""` qualifier and instead adds a "/db_xref=""`
+    on GenBank. This translation function removes the `/protein_id=""` qualifier and instead adds a `/db_xref=""`
     qualifier.
 
     Removes any malformed protein IDs as they are useless.

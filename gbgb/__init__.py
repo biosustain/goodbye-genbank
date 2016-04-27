@@ -154,7 +154,7 @@ def genbank_feature_key(sequence_feature_term, idempotent=True):
 
     :param str sequence_feature_term:
     :param bool idempotent: whether to pass through GenBank feature keys
-    :return: a GenBank feature key for this Sequence Ontology term
+    :return: a GenBank feature key for the provided Sequence Ontology term
     """
     if idempotent and sequence_feature_term in GENBANK_FEATURE_KEYS:
         return sequence_feature_term
