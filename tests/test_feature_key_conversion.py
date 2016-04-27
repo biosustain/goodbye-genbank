@@ -20,9 +20,13 @@ class FeatureKeyConversionTestCase(unittest.TestCase):
 
         self.assertEqual('regulatory', genbank_feature_key('GC_rich_promoter_region'))
 
-        self.assertEqual('ncRNA_gene', genbank_feature_key('miRNA_gene'))
-        self.assertEqual('ncRNA_gene', genbank_feature_key('antisense_RNA'))
+        self.assertEqual('ncRNA', genbank_feature_key('miRNA_gene'))
+        self.assertEqual('ncRNA', genbank_feature_key('antisense_RNA'))
 
+        self.assertEqual('mobile_element', genbank_feature_key('transposable_element'))
+        self.assertEqual('repeat_region', genbank_feature_key('tandem_repeat'))
+
+        # TODO tes
         self.assertEqual('pseudogene', genbank_feature_key('allelically_excluded_gene'))
 
         # unknown terms:
