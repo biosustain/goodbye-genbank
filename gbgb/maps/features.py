@@ -167,14 +167,9 @@ GENBANK_REGULATORY_CLASS_SO_TERMS = {
     "attenuator": "attenuator",
     "enhancer": "enhancer",
 
-    # GB: transcriptional cis regulatory region that prevents the enhancer from modulating the expression of the gene,
-    #     but is not an insulator.
-    "enhancer_blocking_element": None,  # TODO what about this one?
-
     "CAAT_signal": "CAAT_signal",
     'GC_signal': "GC_rich_promoter_region",
 
-    "imprinting_control_region": None,  # TODO what about this one?
 
     "insulator": "insulator",
     "locus_control_region": "locus_control_region",
@@ -192,6 +187,12 @@ GENBANK_REGULATORY_CLASS_SO_TERMS = {
 
     "TATA_box": "TATA_box",
     "terminator": "terminator",
+
+    # TODO enhancer_blocking_element and imprinting_control_region don't seem to have SO terms
+    # http://www.insdc.org/controlled-vocabulary-regulatoryclass
+    # "enhancer_blocking_element": None,
+    # "imprinting_control_region": None,
+
     "other": GENBANK_REGULATORY_DEFAULT_SO_TERM
 }
 

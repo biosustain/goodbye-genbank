@@ -65,7 +65,7 @@ def convert_feature_type(feature):
 
     else:
         if 'pseudo' in feature.qualifiers:
-            pass
+            # TODO /pseudo="" without /pseudogene="" is not well defined and there are no matching SO terms.
             # "The qualifier /pseudo should be used to describe non-functional
             #  genes that are not formally described as pseudogenes, e.g. CDS
             #  has no translation due to other reasons than pseudogenisation events.
@@ -73,10 +73,7 @@ def convert_feature_type(feature):
             #  In order to annotate pseudogenes the qualifier /pseudogene= must be
             #  used indicating the TYPE which can be taken from the INSDC controlled vocabulary
             #  for pseudogenes."
-
-            # FIXME what to do about these?
-            # if 'pseudogene' not in feature.qualifiers:
-            #     raise NotImplementedError()
+            pass
 
         #  /pseudo and /pseudogene="" used with gene
         if 'pseudogene' in feature.qualifiers:
@@ -91,16 +88,14 @@ def convert_feature_type(feature):
                 return 'gene_with_mRNA_with_frameshift'
             elif type_ == 'mRNA':
                 return 'mRNA_with_frameshift'
-            # TODO CDS with frameshift, ..
+            # TODO CDS with frameshift, .. have no SO terms
 
         # /trans_splicing is used on features such as CDS, mRNA and other features that are produced as
         # a result of a trans-splicing event.
         if 'trans_splicing' in feature.qualifiers:
             if type_ == 'mRNA':
                 return 'trans_spliced_mRNA'
-            # TODO trans-spliced CDS, tRNA, ..
-
-        # TODO repeat_region, mobile_element
+            # TODO trans-spliced CDS, tRNA, .. have no SO terms
 
         try:
             return GENBANK_FEATURE_KEY_SO_TERMS[type_]
