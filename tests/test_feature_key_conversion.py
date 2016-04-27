@@ -13,8 +13,8 @@ class FeatureKeyConversionTestCase(unittest.TestCase):
         self.assertEqual('mat_peptide', genbank_feature_key('mature_protein_region'))
 
         # from feature key with qualifiers:
-        self.assertEqual('regulatory_region', genbank_feature_key('TATA_box'))
-        self.assertEqual('regulatory_region', genbank_feature_key('minus_10_signal'))
+        self.assertEqual('regulatory', genbank_feature_key('TATA_box'))
+        self.assertEqual('regulatory', genbank_feature_key('minus_10_signal'))
 
         self.assertEqual('primer_bind', genbank_feature_key('primer_binding_site'))
 
